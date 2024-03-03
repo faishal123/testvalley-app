@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { BannerProps } from "../Desktop/types";
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, TouchEventHandler } from "react";
 import {
 	transitionDuration,
 	increaseBannerIndex,
@@ -14,6 +14,7 @@ import { BannerPagination } from "../Desktop/Scroller";
 
 const BannerMobile: React.FC<BannerProps> = ({ banners }) => {
 	const { triggerTimedCallbacks } = useContext(TimerContext);
+	const [touchPosition, setTouchPosition] = useState(0);
 	const [isMoving, setIsMoving] = useState<boolean | "right" | "left">(false);
 	const [centerBannerIndex, setCenterBannerIndex] = useState<number>(0);
 	const [mouseStatus, setMouseStatus] = useState({
@@ -25,7 +26,6 @@ const BannerMobile: React.FC<BannerProps> = ({ banners }) => {
 	});
 
 	const bannersLength = banners.length;
-
 	const leftBannerIndex = decreaseBannerIndex(centerBannerIndex, bannersLength);
 	const rightBannerIndex = increaseBannerIndex(
 		centerBannerIndex,
@@ -38,6 +38,9 @@ const BannerMobile: React.FC<BannerProps> = ({ banners }) => {
 		rightBannerIndex,
 	];
 
+	const currentImageDimension = document
+		.getElementById(`banner-${centerBannerIndex}`)
+		?.getBoundingClientRect();
 	const windowSize = useWindowSize();
 	const width = windowSize.width || 0;
 
@@ -59,12 +62,12 @@ const BannerMobile: React.FC<BannerProps> = ({ banners }) => {
 		}
 	}, [isMoving]);
 
-	const onMouseRelease: MouseEventHandler<HTMLDivElement> = (e) => {
+	const onMouseRelease = (clientX: number) => {
 		const scrollContainer = document.getElementById("scrollContainer");
 		const currentImage = document.getElementById(`banner-${centerBannerIndex}`);
 		if (currentImage && scrollContainer && mouseStatus.isDown) {
 			const before = mouseStatus.coord.x;
-			const after = e.clientX;
+			const after = clientX;
 			const distance = before - after;
 			if (distance > 0) {
 				setIsMoving("right");
@@ -85,9 +88,43 @@ const BannerMobile: React.FC<BannerProps> = ({ banners }) => {
 		if (
 			mouseStatus.isDown ||
 			mouseStatus.coord.x > 0 ||
-			mouseStatus.coord.y > 0
+			mouseStatus.coord.y > 0 ||
+			touchPosition > 0
 		) {
+			setTouchPosition(0);
 			setMouseStatus({ isDown: false, coord: { x: 0, y: 0 } });
+		}
+	};
+
+	const onTouchStart: TouchEventHandler<HTMLDivElement> = (e) => {
+		setMouseStatus((prev) => ({
+			...prev,
+			isDown: true,
+			coord: {
+				x: e.targetTouches[0].clientX,
+				y: e.targetTouches[0].clientY,
+			},
+		}));
+	};
+
+	const onMouseDown: MouseEventHandler<HTMLDivElement> = (e) => {
+		setMouseStatus((prev) => ({
+			...prev,
+			isDown: true,
+			coord: {
+				x: e.clientX,
+				y: e.clientY,
+			},
+		}));
+	};
+
+	const onMouseMove = (clientX: number) => {
+		if (mouseStatus.isDown) {
+			const distance = mouseStatus.coord.x - clientX;
+			const scrollContainer = document.getElementById("scrollContainer");
+			if (scrollContainer) {
+				scrollContainer.setAttribute("style", `translate: ${distance * -1}px`);
+			}
 		}
 	};
 
@@ -102,8 +139,8 @@ const BannerMobile: React.FC<BannerProps> = ({ banners }) => {
 						translate: !isMoving
 							? "0px"
 							: isMoving === "left"
-							? "452px"
-							: "-452px",
+							? `${(currentImageDimension?.width || 420) + 32}px`
+							: `-${(currentImageDimension?.width || 420) + 32}px`,
 					}}>
 					{bannersIndexesToRender.map((i) => {
 						const currentBanner = banners[i];
@@ -111,32 +148,24 @@ const BannerMobile: React.FC<BannerProps> = ({ banners }) => {
 						const imageHeight = imageWidth / 2;
 						return (
 							<div
-								onMouseDown={(e) => {
-									setMouseStatus((prev) => ({
-										...prev,
-										isDown: true,
-										coord: {
-											x: e.clientX,
-											y: e.clientY,
-										},
-									}));
+								onTouchEnd={(e) => {
+									onMouseRelease(touchPosition);
 								}}
-								onMouseLeave={onMouseRelease}
+								onTouchMove={(e) => {
+									const clientX = e.targetTouches[0].clientX;
+									setTouchPosition(clientX);
+									onMouseMove(clientX);
+								}}
+								onTouchStart={onTouchStart}
+								onMouseDown={onMouseDown}
+								onMouseLeave={(e) => {
+									onMouseRelease(e.clientX);
+								}}
 								onMouseUp={(e) => {
-									onMouseRelease(e);
+									onMouseRelease(e.clientX);
 								}}
 								onMouseMove={(e) => {
-									if (mouseStatus.isDown) {
-										const distance = mouseStatus.coord.x - e.clientX;
-										const scrollContainer =
-											document.getElementById("scrollContainer");
-										if (scrollContainer) {
-											scrollContainer.setAttribute(
-												"style",
-												`translate: ${distance * -1}px`,
-											);
-										}
-									}
+									onMouseMove(e.clientX);
 								}}
 								style={{
 									width: `${imageWidth}px`,
