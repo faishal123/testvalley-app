@@ -5,13 +5,17 @@ import styles from "./ItemsScroller.module.css";
 import SingleItem from "@/components/SingleItem";
 import Chevron from "@/components/Chevron";
 import { TimerContext } from "@/components/ClientComponentWrapper";
+import { useMobile } from "@/utils/common";
 import { ItemsScrollerProps } from "../types";
 
 const initialItemsShown = 4;
 
 const ItemsScroller: React.FC<ItemsScrollerProps> = ({ items }) => {
+	const isMobile = useMobile();
+
 	const [page, setPage] = useState(1);
 	const [changedPageManually, setChangedPageManually] = useState(false);
+
 	const itemsLength = items.length;
 	const pages =
 		itemsLength <= initialItemsShown ? 1 : itemsLength - initialItemsShown + 1;
@@ -53,14 +57,32 @@ const ItemsScroller: React.FC<ItemsScrollerProps> = ({ items }) => {
 
 	const translateAmount = (174 + 8) * (page - 1);
 
+	const renderItems = (customClassName?: string) => {
+		return items.map((item) => {
+			return (
+				<SingleItem
+					customClassName={customClassName}
+					key={item.uuid}
+					item={item}
+				/>
+			);
+		});
+	};
+
+	if (isMobile) {
+		return (
+			<div className={styles.mobileItemsContainer}>
+				{renderItems(styles.mobileItem)}
+			</div>
+		);
+	}
+
 	return (
 		<div className={styles.container}>
 			<div
 				className={styles.scrollingContainer}
 				style={{ translate: `-${translateAmount}px` }}>
-				{items.map((item) => {
-					return <SingleItem key={item.uuid} item={item} />;
-				})}
+				{renderItems()}
 			</div>
 			<div
 				onClick={

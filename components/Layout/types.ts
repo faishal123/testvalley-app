@@ -9,3 +9,7 @@ export type DesktopLayoutProps = {
 	children: ReactNode;
 	customClassName?: string;
 };
+
+export type MobileContainerLayoutProps = {
+	children: ReactNode;
+};

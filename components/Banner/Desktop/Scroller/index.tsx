@@ -1,15 +1,13 @@
 "use client";
-import {
-	ReactElement,
-	Dispatch,
-	SetStateAction,
-	useState,
-	useContext,
-	useEffect,
-} from "react";
+import { useState, useContext, useEffect } from "react";
 import styles from "./Scroller.module.css";
 import { ChevronContainerProps, ScrollerProps } from "../types";
 import Chevron from "@/components/Chevron";
+import {
+	transitionDuration,
+	increaseBannerIndex,
+	decreaseBannerIndex,
+} from "../../utils";
 import { TimerContext } from "@/components/ClientComponentWrapper";
 
 const ChevronContainer: React.FC<ChevronContainerProps> = ({
@@ -21,7 +19,7 @@ const ChevronContainer: React.FC<ChevronContainerProps> = ({
 	return (
 		<div
 			onClick={!isDisabled && onClick ? onClick : undefined}
-			className={`${customClassName} ${styles.chevronContainer}`}>
+			className={`${customClassName || ""} ${styles.chevronContainer}`}>
 			{children}
 		</div>
 	);
@@ -36,15 +34,17 @@ const CirclePagination = ({ isActive }: { isActive?: boolean }) => {
 	);
 };
 
-const BannerPagination = ({
+export const BannerPagination = ({
 	bannerLength,
 	activeIndex,
+	customClassName,
 }: {
 	bannerLength: number;
 	activeIndex: number;
+	customClassName?: string;
 }) => {
 	return (
-		<div className={styles.bannerPagination}>
+		<div className={`${customClassName || ""} ${styles.bannerPagination}`}>
 			{Array.from(new Array(bannerLength)).map((_, i) => (
 				<CirclePagination key={i} isActive={i === activeIndex} />
 			))}
@@ -58,9 +58,6 @@ const Scroller: React.FC<ScrollerProps> = ({
 	bannerLength,
 	centerBannerIndex,
 	setCenterBannerIndex,
-	transitionDuration,
-	decreaseBannerIndex,
-	increaseBannerIndex,
 }) => {
 	const [isHovering, setIsHovering] = useState(false);
 	const onClickLeftChevron = () => {
@@ -82,10 +79,14 @@ const Scroller: React.FC<ScrollerProps> = ({
 		if (isMoving) {
 			setTimeout(() => {
 				if (isMoving === "left") {
-					setCenterBannerIndex((prev) => decreaseBannerIndex(prev));
+					setCenterBannerIndex((prev) =>
+						decreaseBannerIndex(prev, bannerLength),
+					);
 				}
 				if (isMoving === "right") {
-					setCenterBannerIndex((prev) => increaseBannerIndex(prev));
+					setCenterBannerIndex((prev) =>
+						increaseBannerIndex(prev, bannerLength),
+					);
 				}
 				setIsMoving(false);
 			}, transitionDuration * 1000);

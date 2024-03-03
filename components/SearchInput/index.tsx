@@ -19,7 +19,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
 				onChange={(e) => {
 					setSearchValue(e?.target?.value);
 				}}
-				customClassName={customClassName}
+				customClassName={customClassName || ""}
 				leftIcon={
 					<Image
 						className={"cursorPointer"}

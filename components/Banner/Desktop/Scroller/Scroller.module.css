@@ -25,6 +25,14 @@
 	background: white;
 }
 
+@media (max-width: 960px) {
+	.circlePagination {
+		height: 4px;
+		width: 4px;
+		border-radius: 2px;
+	}
+}
+
 .circlePaginationInactive {
 	opacity: 50%;
 }

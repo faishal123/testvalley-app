@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { CollectionsResponse } from "@/components/HotDeal/types";
 import { ShortcutType } from "@/components/Shortcut/types";
-import { BannerType } from "@/components/Banner/types";
+import { BannerType } from "@/components/Banner/Desktop/types";
 import ClientComponentWrapper from "@/components/ClientComponentWrapper";
 import "./globals.css";
 

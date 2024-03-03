@@ -30,9 +30,6 @@ export type ScrollerProps = {
 	bannerLength: number;
 	centerBannerIndex: number;
 	setCenterBannerIndex: Dispatch<SetStateAction<number>>;
-	transitionDuration: number;
-	decreaseBannerIndex: (prev: number) => number;
-	increaseBannerIndex: (prev: number) => number;
 };
 
 export type BannerProps = {

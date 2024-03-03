@@ -11,3 +11,18 @@
 	gap: 8px;
 	font-size: 13px;
 }
+
+@media (max-width: 960px) {
+	.singleShortcut {
+		font-size: 11px;
+	}
+	.shortcutsContainer {
+		display: block;
+	}
+}
+
+.mobileShortcutsContainer {
+	display: flex;
+	padding: 16px 20px;
+	justify-content: space-between;
+}

@@ -26,3 +26,11 @@
 .disabled {
 	opacity: 0.35;
 }
+
+.mobileItemsContainer {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 24px 8px;
+	align-items: start;
+	-webkit-box-align: start;
+}

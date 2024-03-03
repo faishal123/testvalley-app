@@ -1,0 +1,17 @@
+.container {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 4px 4px 4px 24px;
+	box-sizing: border-box;
+}
+
+.container > :nth-child(2) {
+	display: flex;
+	align-items: center;
+}
+
+.container > :nth-child(2) img {
+	padding: 12px;
+}

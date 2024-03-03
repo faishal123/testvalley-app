@@ -22,7 +22,7 @@ const Input: React.FC<InputProps> = ({
 	rightIcon,
 }) => {
 	return (
-		<div className={`${styles.inputContainer} ${customClassName}`}>
+		<div className={`${styles.inputContainer} ${customClassName || ""}`}>
 			{leftIcon && <div className={styles.leftIcon}>{leftIcon}</div>}
 			<input
 				value={value}

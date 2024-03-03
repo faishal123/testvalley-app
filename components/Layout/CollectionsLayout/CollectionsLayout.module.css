@@ -18,3 +18,23 @@
 	font-weight: unset;
 	color: #999999;
 }
+
+@media (max-width: 960px) {
+	.collectionsContainer {
+		display: block;
+	}
+
+	.titleContainer {
+		padding-right: 40px;
+		padding-bottom: 20px;
+	}
+
+	.titleContainer > h2 {
+		font-size: 18px;
+	}
+}
+
+.mobileContainer {
+	margin-top: 48px;
+	padding: 0 20px;
+}

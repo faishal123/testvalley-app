@@ -56,3 +56,21 @@
 .itemImage {
 	margin-bottom: 12px;
 }
+
+@media (max-width: 960px) {
+	.itemTitle {
+		font-size: 13px;
+	}
+
+	.price {
+		font-size: 15px;
+	}
+
+	.discountRate {
+		font-size: 15px;
+	}
+
+	.ratingContainer {
+		font-size: 11px;
+	}
+}

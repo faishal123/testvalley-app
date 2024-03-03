@@ -6,7 +6,7 @@ const DesktopLayout: React.FC<DesktopLayoutProps> = ({
 	customClassName,
 }) => {
 	return (
-		<div className={`${customClassName} ${styles.fullWidthContainer}`}>
+		<div className={`${customClassName || ""} ${styles.fullWidthContainer}`}>
 			<div className={styles.childrenContainer}>{children}</div>
 		</div>
 	);
