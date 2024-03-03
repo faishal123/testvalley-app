@@ -1,0 +1,13 @@
+.fullWidthContainer {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+
+.childrenContainer {
+	flex-grow: 1;
+	max-width: 960px;
+	display: flex;
+	justify-content: space-between;
+	box-sizing: border-box;
+}

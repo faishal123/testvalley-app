@@ -1,0 +1,20 @@
+.containerWithMargin {
+	margin-top: 56px;
+}
+
+.collectionsContainer {
+	display: flex;
+	gap: 40px;
+}
+
+.titleContainer {
+	min-width: 200px;
+	max-width: 200px;
+}
+
+.subtitle {
+	margin-top: 8px;
+	font-size: 12px;
+	font-weight: unset;
+	color: #999999;
+}

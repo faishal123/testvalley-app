@@ -1,0 +1,1 @@
+This is a [Next.js](https://nextjs.org/) project created to complete the recruitment process in order to join [TestValley](https://www.testvalley.kr/) team

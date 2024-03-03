@@ -1,0 +1,28 @@
+.container {
+	overflow: hidden;
+	max-width: 720px;
+}
+
+.scrollingContainer {
+	display: flex;
+	gap: 8px;
+	transition: 0.2s;
+}
+
+.leftChevronContainer {
+	cursor: pointer;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+}
+
+.rightChevronContainer {
+	cursor: pointer;
+	position: absolute;
+	left: 50px;
+	bottom: 0;
+}
+
+.disabled {
+	opacity: 0.35;
+}

@@ -1,0 +1,63 @@
+.chevronContainer {
+	height: 44px;
+	width: 44px;
+	background-color: rgba(51, 51, 51, 0.5);
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 22px;
+}
+
+.bannerPagination {
+	display: flex;
+	gap: 8px;
+	position: absolute;
+	bottom: 15px;
+	left: 50%;
+	translate: -50%;
+}
+
+.circlePagination {
+	height: 8px;
+	width: 8px;
+	border-radius: 4px;
+	background: white;
+}
+
+.circlePaginationInactive {
+	opacity: 50%;
+}
+
+.scrollerContainer {
+	width: 100%;
+	height: 100%;
+	display: flex;
+}
+
+.whiteOverlay {
+	background-color: white;
+	opacity: 0.6;
+	height: 100%;
+	flex-grow: 1;
+}
+
+.centerOverlay {
+	height: 100%;
+	width: 960px;
+	position: relative;
+}
+
+.leftChevron {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	translate: -460px -50%;
+}
+
+.rightChevron {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	translate: +416px -50%;
+}
