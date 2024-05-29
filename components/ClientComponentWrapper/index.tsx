@@ -10,6 +10,7 @@ import MobileContainerLayout from "../Layout/MobileContainerLayout";
 import ScrollToTop from "../ScrollToTop";
 import { ClientComponentWrapperProps } from "./types";
 import MobileNavBar from "../MobileNavBar";
+import DesktopContainer from "../Layout/DesktopContainer";
 
 export const TimerContext = createContext<{ triggerTimedCallbacks: number }>({
 	triggerTimedCallbacks: 0,
@@ -55,7 +56,7 @@ const ClientComponentWrapper: React.FC<ClientComponentWrapperProps> = ({
 					<ScrollToTop />
 				</MobileContainerLayout>
 			) : (
-				childrenToRender
+				<DesktopContainer>{childrenToRender}</DesktopContainer>
 			)}
 		</TimerContext.Provider>
 	);
